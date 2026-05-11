@@ -1,1 +1,0 @@
-console.log("running a live server script v1");
