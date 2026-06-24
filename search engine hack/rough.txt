@@ -1,0 +1,16 @@
+add microsoft logo make header
+add icons and all
+
+add dummy menu bar in class="gsc-tabsArea" mutation change
+
+below add some results of top trusted icons about 1400 results.
+
+while ther user is seraching get the sugg list and then change the last and last 3rd then change show on right and bottom auto click and search.
+
+boder radius of thumbnail match
+
+below make the sugg list to search on bing and google
+
+// hide below footer hide (.gcsc-more-maybe-branding-root & #cse-footer)
+
+add pagination and follow up search and padding below
