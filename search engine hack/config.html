@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Code Generator</title>
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --surface: #13161d;
+            --surface-2: #1a1e28;
+            --surface-3: #222736;
+            --border: #2a2f3e;
+            --border-light: #363d52;
+            --accent: #ff4f1f;
+            --accent-dim: rgba(255, 79, 31, 0.15);
+            --accent-glow: rgba(255, 79, 31, 0.35);
+            --gold: #f5c842;
+            --gold-dim: rgba(245, 200, 66, 0.12);
+            --text-primary: #e8eaf0;
+            --text-secondary: #8892a4;
+            --text-muted: #4a5268;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-title {
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        @media (max-width: 800px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .panel {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: var(--surface-2);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .sugg-input {
+            margin-bottom: 8px;
+        }
+
+        .output-panel {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            height: max-content;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        button.copy-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        button.copy-btn:hover {
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        pre {
+            background-color: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            overflow-x: auto;
+            color: var(--gold);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            flex-grow: 1;
+            margin: 0;
+            white-space: pre;
+            word-break: normal;
+        }
+
+        /* Toggle Switch Styles */
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            background: var(--surface-2);
+            padding: 12px 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+        }
+        
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 24px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--surface-3);
+            transition: .3s;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--text-secondary);
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+            background-color: white;
+        }
+
+        /* Group for popup specific settings to gray out when toggled off */
+        .popup-settings-group {
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+        
+        .popup-settings-group.disabled {
+            opacity: 0.3;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1 class="header-title">Boost ClickBank Funnel Conversion Rate</h1>
+
+    <div class="container">
+        <!-- Settings Panel -->
+        <div class="panel">
+            <h2>Configuration Settings</h2>
+
+            <!-- Main Toggle -->
+            <div class="toggle-wrapper">
+                <span class="toggle-label">Include Popup HTML/CSS</span>
+                <label class="switch">
+                    <input type="checkbox" id="val-includePopup" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="input-group">
+                <label>Product Name</label>
+                <input type="text" id="val-productName" class="std-input" value="Claritox">
+            </div>
+            
+            <div class="input-group">
+                <label>_GPSEID</label>
+                <input type="text" id="val-gpseid" class="std-input" value="67694cafb2a644a2a">
+            </div>
+            
+            <div class="input-group">
+                <label>Suggested Keywords</label>
+                <div id="suggestions-container">
+                    <input type="text" class="sugg-input" value="claritox reviews">
+                    <input type="text" class="sugg-input" value="claritox ingredients">
+                    <input type="text" class="sugg-input" value="claritox official website">
+                    <input type="text" class="sugg-input" value="claritox buy now">
+                    <input type="text" class="sugg-input" placeholder="Add new suggestion...">
+                </div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-light); margin: 25px 0;">
+
+            <!-- Popup Specific Settings -->
+            <div id="popup-settings-wrapper" class="popup-settings-group">
+                <div class="input-group">
+                    <label>Product Image Link</label>
+                    <input type="text" id="val-image" class="std-input" value="https://claritox.colibrim.com/claritox/claritox-pro.png">
+                </div>
+                
+                <div class="input-group">
+                    <label>Headline (.product-headline)</label>
+                    <input type="text" id="val-headline" class="std-input" value="Claim 78% OFF on Claritox 6 Bottle discount">
+                </div>
+                
+                <div class="input-group">
+                    <label>Subtext (.product-subtext)</label>
+                    <input type="text" id="val-subtext" class="std-input" value="to only first 100 Buyers.">
+                </div>
+                
+                <div class="input-group">
+                    <label>Button Text</label>
+                    <input type="text" id="val-btnText" class="std-input" value="Yes, Claim My Discount">
+                </div>
+                
+                <div class="input-group">
+                    <label>Order Button Link</label>
+                    <input type="text" id="val-orderLink" class="std-input" value="/order">
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="panel output-panel">
+            <div class="code-header">
+                <h2>Generated Code</h2>
+                <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+            </div>
+            <p>Please this code before <i>`&#60;/body&#62;`</i> :</p>
+            <pre><code id="code-output"></code></pre>
+        </div>
+    </div>
+
+    <script>
+        function generateCode() {
+            const includePopup = document.getElementById('val-includePopup').checked;
+            
+            // Toggle the visual state of the popup settings block
+            const popupWrapper = document.getElementById('popup-settings-wrapper');
+            if (includePopup) {
+                popupWrapper.classList.remove('disabled');
+            } else {
+                popupWrapper.classList.add('disabled');
+            }
+
+            const productName = document.getElementById('val-productName').value;
+            const gpseid = document.getElementById('val-gpseid').value;
+            const imgLink = document.getElementById('val-image').value;
+            const headline = document.getElementById('val-headline').value;
+            const subtext = document.getElementById('val-subtext').value;
+            const btnText = document.getElementById('val-btnText').value;
+            const orderLink = document.getElementById('val-orderLink').value;
+
+            // Gather dynamically generated suggestions into an array
+            const suggInputs = document.querySelectorAll('.sugg-input');
+            const suggArray = [];
+            suggInputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    suggArray.push(input.value.trim());
+                }
+            });
+            const suggAryInitialStr = JSON.stringify(suggArray);
+
+            const popupHtmlCss = `<style> #product-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); display: flex; justify-content: center; align-items: center; z-index: 999999; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; font-family: 'Arial', sans-serif; }  #product-popup-overlay.show-popup { opacity: 1; visibility: visible; }  #product-popup-content { position: relative; background-color: #ffffff; border-radius: 12px; padding: 40px 30px 30px 30px; width: 90%; max-width: 420px; text-align: center; box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3); transform: translateY(30px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }  #product-popup-overlay.show-popup #product-popup-content { transform: translateY(0); }  .product-top-close { position: absolute; top: 10px; right: 15px; font-size: 28px; font-weight: bold; color: #aaaaaa; cursor: pointer; line-height: 1; transition: color 0.2s ease; }  .product-top-close:hover { color: #333333; }  .product-img { max-width: 100%; height: auto; margin-bottom: 15px; border-radius: 8px; }  .product-headline { font-size: 26px; font-weight: 800; color: #d90429; line-height: 1.2; margin: 0 0 10px 0; }  .product-subtext { font-size: 13px; color: #555555; font-weight: bold; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 0.5px; }  .product-btn-claim { display: block; width: 100%; background-color: #28a745; color: #ffffff; padding: 16px; font-size: 20px; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4); transition: all 0.3s ease; margin-bottom: 15px; }  .product-btn-claim:hover { background-color: #218838; transform: scale(1.03); }  .product-btn-close-text { background: transparent; border: none; color: #888888; font-size: 14px; text-decoration: underline; cursor: pointer; padding: 5px; transition: color 0.3s ease; }  .product-btn-close-text:hover { color: #333333; } </style>  <div id="product-popup-overlay"> <div id="product-popup-content"> <span class="product-top-close" onclick="closeProductPopup()">&times;</span>  <img src="${imgLink}" alt="${productName} Package" class="product-img" id="product-pkg-img">  <h2 class="product-headline">${headline}</h2> <div class="product-subtext">${subtext}</div>  <button class="product-btn-claim" onclick="window.location.href='${orderLink}'">${btnText}</button>  <button class="product-btn-close-text" onclick="closeProductPopup()">No thanks, I'll pay full price later</button> </div> </div>  <script> function closeProductPopup() { document.getElementById('product-popup-overlay').classList.remove('show-popup'); }  window.onload = function () { setTimeout(function () { document.getElementById('product-popup-overlay').classList.add('show-popup'); }, 300);  }; <\/script>\n`;
+
+            const baseScripts = `<script>
+const productName = "${productName}";
+const _GPSEID = "${gpseid}";
+const suggAryInitial = ${suggAryInitialStr};
+<\/script>
+<script src="http://seo-main.github.io/ext-license/search%20engine%20hack/pse-init.js"><\/script>`;
+
+            const finalTemplate = includePopup ? popupHtmlCss + baseScripts : baseScripts;
+            document.getElementById('code-output').textContent = finalTemplate;
+        }
+
+        // Attach listener to the toggle
+        document.getElementById('val-includePopup').addEventListener('change', generateCode);
+
+        // Handle dynamic inputs for the suggestions array
+        const suggContainer = document.getElementById('suggestions-container');
+        suggContainer.addEventListener('input', function(e) {
+            if (e.target.classList.contains('sugg-input')) {
+                const inputs = suggContainer.querySelectorAll('.sugg-input');
+                const lastInput = inputs[inputs.length - 1];
+                
+                if (lastInput.value.trim() !== '') {
+                    const newInput = document.createElement('input');
+                    newInput.type = 'text';
+                    newInput.className = 'sugg-input';
+                    newInput.placeholder = 'Add new suggestion...';
+                    suggContainer.appendChild(newInput);
+                }
+                generateCode();
+            }
+        });
+
+        // Attach event listeners to standard inputs to regenerate code on change
+        const stdInputs = document.querySelectorAll('.std-input');
+        stdInputs.forEach(input => {
+            input.addEventListener('input', generateCode);
+        });
+
+        // Copy function
+        function copyCode() {
+            const codeText = document.getElementById('code-output').textContent;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.backgroundColor = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.backgroundColor = 'var(--accent)';
+                }, 2000);
+            });
+        }
+
+        // Initial generation
+        generateCode();
+    </script>
+</body>
+</html>

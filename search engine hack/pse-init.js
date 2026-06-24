@@ -116,8 +116,8 @@
     }
 
     // Inject assets
-    loadCSS("pse.css", false);
-    loadJS("pse.js", false).catch(function (err) {
+    loadCSS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.css", false);
+    loadJS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.js", false).catch(function (err) {
       console.warn("[PSE] pse.js failed to load:", err);
     });
     makePSEUI();
@@ -155,7 +155,7 @@
       <div id="SearchResultPanel">
           <div class="gcse-searchresults"></div>
       </div>`)
-      loadJS("https://cse.google.com/cse.js?cx=67694cafb2a644a2a",true).then(e=>{
+      loadJS("https://cse.google.com/cse.js?cx="+_GPSEID,true).then(e=>{
         setTimeout(()=>{history.pushState({productName},"","#fromsearch")},1000)
       });
     // Guarantee highest z-index via inline style (pse.css can refine further)
@@ -178,8 +178,8 @@
 
     // Fire custom event so pse.js / your own code can react
     document.dispatchEvent(new CustomEvent("pse:started", { detail: { engine: window.__PSE_ENGINE__ } }));
-    loadCSS("pse.css", true);
-    loadJS("pse.js", true).catch(function (err) {
+    loadCSS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.css", true);
+    loadJS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.js", true).catch(function (err) {
       console.warn("[PSE] pse.js failed to load:", err);
     });
   }
