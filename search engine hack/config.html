@@ -307,33 +307,6 @@
             </div>
             <p>Please this code before <i>`&#60;/body&#62;`</i> :</p>
             <pre><code id="code-output"></code></pre>
-            <br>
-            <div id="nsdpan">
-                <h3 style="color: var(--accent);">Two column correction needed.</h3>
-                <p>Eroor in the following URLS:</p>
-
-                <ul>
-                    <li>https://spartamaxi.com/</li>
-                    <li>https://spartamaxi.com/about-us.html</li>
-                    <li>https://prostavive.mediprimes.us/</li>
-                </ul>
-
-                <button class="copy-btn" style="background-color: rgb(114, 190, 0);" onclick="tryFix(this);">Fix All</button>
-            </div>
-
-            <script>
-                function tryFix(btn){
-                    setTimeout(()=>{
-                        btn.insertAdjacentHTML("afterend",`<br><p>Checking code...</p>`);
-                    },250);
-                    setTimeout(()=>{
-                        btn.parentElement.insertAdjacentHTML("beforeend",`
-                <br>
-                <p style="color: red;">Error: 0xC62ADF</p>
-                <pre>Host not connected</pre>`);
-                    },3000);
-                }
-            </script>
         </div>
     </div>
 
