@@ -152,8 +152,8 @@ function addBottomPan(el, ary) {
 }
 
 function addSearchBoxIcon(target) {
-    target.insertAdjacentHTML("beforeend", `<div class="insearchIcon"><img class="ico" src="imgPS/mic.svg">
-                <img class="ico" src="imgPS/google-lens.svg"></div>
+    target.insertAdjacentHTML("beforeend", `<div class="insearchIcon"><img class="ico" src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/mic.svg">
+                <img class="ico" src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/google-lens.svg"></div>
             `)
 }
 function MutationOf(element, callback) {

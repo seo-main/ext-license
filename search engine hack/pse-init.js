@@ -140,7 +140,7 @@
       <div id="top" class="flex" style="justify-content: space-between;margin-bottom: 10px;">
           <div id="topPanPS" class="flex">
               <div id="logoPanPS" class="flex">
-                  <img src="imgPS/microsoft.svg" alt="logo" class="ico">
+                  <img src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/microsoft.svg" alt="logo" class="ico">
               </div>
               <div id="SearchPanReal">
 
@@ -148,7 +148,7 @@
               </div>
           </div>
           <div class="userIconPan" style="padding-right: 100px;">
-              <img src="imgPS/msuserpan.png" alt="user icon">
+              <img src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/msuserpan.png" alt="user icon">
           </div>
       </div>
 
