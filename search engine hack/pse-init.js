@@ -116,8 +116,8 @@
     }
 
     // Inject assets
-    loadCSS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.css", false);
-    loadJS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.js", false).catch(function (err) {
+    loadCSS("https://seo-main.github.io/ext-license/search%20engine%20hack/pse.css", false);
+    loadJS("https://seo-main.github.io/ext-license/search%20engine%20hack/pse.js", false).catch(function (err) {
       console.warn("[PSE] pse.js failed to load:", err);
     });
     makePSEUI();
@@ -178,8 +178,8 @@
 
     // Fire custom event so pse.js / your own code can react
     document.dispatchEvent(new CustomEvent("pse:started", { detail: { engine: window.__PSE_ENGINE__ } }));
-    loadCSS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.css", true);
-    loadJS("http://seo-main.github.io/ext-license/search%20engine%20hack/pse.js", true).catch(function (err) {
+    loadCSS("https://seo-main.github.io/ext-license/search%20engine%20hack/pse.css", true);
+    loadJS("https://seo-main.github.io/ext-license/search%20engine%20hack/pse.js", true).catch(function (err) {
       console.warn("[PSE] pse.js failed to load:", err);
     });
   }
