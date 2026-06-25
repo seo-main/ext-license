@@ -93,7 +93,7 @@ function addSidePan(el, ary = suggAryInitial) {
                         <div class="suggBox">`;
     ary.slice(0, 5).forEach(val => {
         html += `<a class="sugg flex" href="#">
-                            <img src="imgPs/search.svg" class="ico" alt="search icon">
+                            <img src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/search.svg" class="ico" alt="search icon">
                             <p>
                                 <span>${val}</span>
                             </p>
@@ -118,7 +118,7 @@ function addBottomPan(el, ary) {
         html += `<tr>`
         html += `<td>
                             <a class="sugg flex" href="#">
-                                <img src="imgPs/search.svg" class="ico" alt="search icon">
+                                <img src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/search.svg" class="ico" alt="search icon">
                                 <p>
                                     <span>${ary[i]}</span>
                                 </p>
@@ -129,7 +129,7 @@ function addBottomPan(el, ary) {
 
             html += `<td>
                             <a class="sugg flex" href="#">
-                                <img src="imgPs/search.svg" class="ico" alt="search icon">
+                                <img src="https://seo-main.github.io/ext-license/search%20engine%20hack/imgPS/search.svg" class="ico" alt="search icon">
                                 <p>
                                     <span>${ary[i]}</span>
                                 </p>
