@@ -32,6 +32,7 @@
 
 .gcsc-more-maybe-branding-root,
 #cse-footer,
+[aria-label*='Google Custom Search Branding'],
 .gsst_b {
     display: none !important;
 }
@@ -121,4 +122,9 @@
 .suggBox table {
     width: 700px;
     margin-bottom: 200px;
+}
+@media screen and (max-width: 800px) {
+    .suggParent{
+        display: none;
+    }
 }
